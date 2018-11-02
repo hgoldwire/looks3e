@@ -30,6 +30,16 @@ object SimpleDBUploader {
     new ReplaceableItem(item.key, itemAddtributes(item).asJava)
   }
 
+  def search = {
+    println(s"searching")
+    val sdb: AmazonSimpleDB = AmazonSimpleDBClientBuilder.defaultClient()
+//    val req = new SelectRequest("select * from `looks3e-hgoldwire` where ItemName() like '%gif'")
+    val req = new SelectRequest("select * from `looks3e-hgoldwire` LIMIT 100")
+    val res = sdb.select(req)
+    val items = res.getItems.asScala
+    println(s"saw $items")
+    items
+  }
 
 }
 
@@ -37,13 +47,13 @@ case class SimpleDBUploader(domain: String, queue: Queue[S3Item], batchSize: Int
 
   implicit val sdb: AmazonSimpleDB = AmazonSimpleDBClientBuilder.defaultClient()
 
-  DynamoDBUploader.createDomain(domain)
+  SimpleDBUploader.createDomain(domain)
 
   def start = {
     println(s"$this starting")
     while (true) {
       val items = queue.take(batchSize)
-      val ris = items.map(DynamoDBUploader.replacableItem)
+      val ris = items.map(SimpleDBUploader.replacableItem)
       val req = new BatchPutAttributesRequest(domain, ris.asJava)
       val res = sdb.batchPutAttributes(req)
     }

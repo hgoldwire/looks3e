@@ -4,6 +4,16 @@ version := "0.1"
 
 scalaVersion := "2.12.7"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk-s3" % "1.11.438"
+val http4sVersion = "0.18.20"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk-simpledb" % "1.11.438"
+val awsSdkVersion = "1.11.438"
+
+libraryDependencies ++= Seq(
+  "com.amazonaws" % "aws-java-sdk-s3" % awsSdkVersion,
+  "com.amazonaws" % "aws-java-sdk-simpledb" % awsSdkVersion
+)
+
+libraryDependencies ++= Seq(
+  "org.http4s" %% "http4s-dsl" % http4sVersion,
+  "org.http4s" %% "http4s-blaze-server" % http4sVersion
+)
