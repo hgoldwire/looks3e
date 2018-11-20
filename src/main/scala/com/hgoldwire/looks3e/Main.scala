@@ -1,6 +1,5 @@
 package com.hgoldwire.looks3e
 
-
 object Main extends App {
 
   val allItems = for {
@@ -11,5 +10,8 @@ object Main extends App {
 
   println(s"saw ${allItems.size} items")
 
+  //  val file = new File("/tmp/hgoldwire.json")
+  //  val bw = new BufferedWriter(new FileWriter(file))
+  //  bw.write(allItems.asJson.spaces2)
 
 }
