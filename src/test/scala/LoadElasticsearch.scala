@@ -4,20 +4,14 @@ import com.sksamuel.elastic4s.RefreshPolicy
 import com.sksamuel.elastic4s.embedded.LocalNode
 import com.sksamuel.elastic4s.http.search.SearchResponse
 import com.sksamuel.elastic4s.http.{RequestFailure, RequestSuccess}
+import com.sksamuel.elastic4s.http.ElasticDsl._
 
-
-
+// based on example app at ==> https://github.com/sksamuel/elastic4s
 object LoadElasticsearch extends App {
 
-  // spawn an embedded node for testing
   val localNode = LocalNode("goat", "/tmp/tt")
 
-  // in this example we create a client attached to the embedded node, but
-  // in a real application you would provide the HTTP address to the ElasticClient constructor.
   val client = localNode.client(shutdownNodeOnClose = true)
-
-  // we must import the dsl
-  import com.sksamuel.elastic4s.http.ElasticDsl._
 
   // Next we create an index in advance ready to receive documents.
   // await is a helper method to make this operation synchronous instead of async
