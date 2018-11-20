@@ -30,7 +30,10 @@ object Elastic extends App {
   }
 
   client.execute {
-//    deleteIndex("looks3e")
+        deleteIndex("looks3e")
+  }.await
+
+  client.execute {
     createIndex("looks3e").mappings(
       mapping("s3item")
     )
